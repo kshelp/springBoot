@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -20,12 +20,12 @@
 	</properties>
 
 	<!-- lab1 begin -->
-	<repositories>
-		<repository>
-			<id>oracle</id>
-			<url>http://maven.jahia.org/maven2</url>
-		</repository>
-	</repositories>
+	<!--	<repositories>
+            <repository>
+                <id>oracle</id>
+                <url>http://maven.jahia.org/maven2</url>
+            </repository>
+        </repositories>-->
 	<!-- lab1 end -->
 
 	<dependencies>
@@ -46,7 +46,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.30</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -67,10 +68,15 @@
 			<version>5.1.36</version>
 		</dependency>
 		<!-- 오라클 JDBC 드라이버 -->
+		<!--<dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>12.1.0.2</version>
+        </dependency>-->
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>12.1.0.2</version>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
