@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.club.dao.GuestbookDAO">
+
+	<select id="create" resultType="int">
+		INSERT into guestbook (title, content, writer, regdate, moddate)
+		VALUES (#{title}, #{content}, #{writer}, #{regdate}, #{moddate})
+	</select>
+
+	<select id="read" resultType="org.zerock.club.vo.Guestbook">
+		SELECT gno, moddate, regdate, content, title, writer
+		FROM guestbook
+		WHERE gno = #{gno}
+	</select>
+
+	<select id="update">
+		UPDATE guestbook
+		SET title = #{title}, content = #{content}
+		WHERE gno = #{gno}	
+	</select>
+
+	<select id="delete">
+		DELETE FROM guestbook
+		WHERE gno = #{gno}
+	</select>
+
+	<select id="listCriteriaCount" resultType="int">
+  		SELECT count(gno) 
+  		FROM guestbook
+  		WHERE gno > 0 
+	</select>
+
+	<select id="listCriteria" resultType="org.zerock.club.vo.Guestbook">
+ 		SELECT gno, moddate, regdate, content, title, writer
+ 		FROM guestbook
+ 		WHERE gno > 0
+		ORDER BY gno DESC, title ASC
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+
+	<select id="listSearchCount" resultType="int">
+  		SELECT count(gno) 
+  		FROM guestbook
+  		WHERE gno > 0
+		<include refid="search"></include>
+	</select>
+
+	<select id="listSearch" resultType="org.zerock.club.vo.Guestbook">
+  		SELECT * 
+  		FROM guestbook
+  		WHERE gno > 0
+		<include refid="search"></include>
+		ORDER BY gno DESC
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+
+	<sql id="search">
+		<if test="type != null">
+			<if test="type == 't'.toString()">
+				and title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'c'.toString()">
+				and content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'w'.toString()">
+				and writer like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type == 'tc'.toString()">
+				and ( title like CONCAT('%', #{keyword}, '%') 
+				OR 
+				content like CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="type == 'tc'.toString()">
+				and ( title like CONCAT('%', #{keyword}, '%') 
+				OR 
+				content like CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="type == 'tcw'.toString()">
+				and ( title like CONCAT('%', #{keyword}, '%')
+				OR
+				content like CONCAT('%', #{keyword}, '%')
+				OR
+				writer like CONCAT('%', #{keyword}, '%'))
+			</if>
+		</if>
+	</sql> 
+
+</mapper>
